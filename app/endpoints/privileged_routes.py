@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from typing import List
 from app.models.tracking_modules import Module
+import app.models.vector_index  as vi
 from app.odm.dal import modules_collection
 
 router = APIRouter()
@@ -13,7 +14,7 @@ async def create_module(module: Module):
     created_module = await modules_collection.find_one({"_id": result.inserted_id})
     
     if created_module:
-
+        vi.update_embeddings_and_index()
         return created_module
     
     raise HTTPException(status_code=500, detail="Failed to create module")

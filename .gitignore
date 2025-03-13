@@ -1,8 +1,6 @@
 
 .venv
 .vscode
-#.pyc
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -45,12 +43,12 @@ pip-delete-this-directory.txt
 # Unit test / coverage reports
 htmlcov/
 .tox/
+.nox/
 .coverage
 .coverage.*
 .cache
 nosetests.xml
 coverage.xml
-*,cover
 *.cover
 *.py,cover
 cover/
@@ -96,13 +94,6 @@ ipython_config.py
 # celery stuff
 celerybeat-schedule
 celerybeat.pid
-
-# dotenv
-.env
-
-# virtualenv
-venv/
-ENV/
 
 # Spyder project settings
 .spyderproject

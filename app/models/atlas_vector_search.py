@@ -1,13 +1,9 @@
 import pymongo
-from pymongo.operations import SearchIndexModel
 from sentence_transformers import SentenceTransformer
-import time
 import os
 from dotenv import load_dotenv
 from pathlib import Path
 import sys
-import csv
-from bson.binary import Binary
 
 # Connect to MongoDB
 # Find the project root directory (2 levels up from current file)
@@ -34,30 +30,12 @@ modules_collection_other = client_other["privileged_database"]["tracking_modules
 model_path = project_root / "models"
 # Convert Path to string (important for Windows compatibility)
 model_path_str = str(model_path)
-model = SentenceTransformer('mixedbread-ai/mxbai-embed-large-v1')
+# model = SentenceTransformer('mixedbread-ai/mxbai-embed-large-v1')
 model = SentenceTransformer(model_path_str)
 
 # Define function to generate embeddings
 def get_embedding(text):
     return model.encode(text).tolist()
-
-# # Create your index model, then create the search index
-# search_index_model = SearchIndexModel(
-#   definition = {
-#     "fields": [
-#       {
-#         "type": "vector",
-#         "numDimensions": 1024,
-#         "path": "embeddings",
-#         "similarity": "dotProduct"
-#       }
-#     ]
-#   },
-#   name = "tracking_modules_vector_index",
-#   type = "vectorSearch" 
-# )
-
-# modules_collection_other.create_search_index(model=search_index_model)
 
 # Function to get the results of a vector search query
 def get_query_results(query):
@@ -77,6 +55,7 @@ def get_query_results(query):
                "_id": 0,
                "module_id": 1,
                "module_name": 1,
+               "module_domain": 1,
                "description": 1,
                "score": {
                   "$meta": "vectorSearchScore"

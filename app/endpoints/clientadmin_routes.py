@@ -3,7 +3,6 @@ from typing import List
 from app.models.tracking_modules import Module, ModuleQuery
 from app.odm.dal import modules_collection
 import app.models.atlas_vector_search as vs
-import pprint
 
 router = APIRouter()
 
